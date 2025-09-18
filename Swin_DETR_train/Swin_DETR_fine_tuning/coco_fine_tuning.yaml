@@ -1,0 +1,71 @@
+dataset_params:
+  train_ann_file: 'Dataset/Road_Objects_Dataset/COCO_format_Resize_2048x1024/train/new_annotations.coco.json'
+  val_ann_file: 'Dataset/Road_Objects_Dataset/COCO_format_Resize_2048x1024/valid/new_annotations.coco.json'
+  test_ann_file: 'Dataset/Road_Objects_Dataset/COCO_format_Resize_2048x1024/test/new_annotations.coco.json'
+  train_img_dir: 'Dataset/Road_Objects_Dataset/COCO_format_Resize_2048x1024/train'
+  val_img_dir: 'Dataset/Road_Objects_Dataset/COCO_format_Resize_2048x1024/valid'
+  test_img_dir: 'Dataset/Road_Objects_Dataset/COCO_format_Resize_2048x1024/test'
+
+  num_classes:    92
+  bg_class_idx:   0
+  im_size:        1024
+
+
+
+model_params:
+  im_channels : 3
+  backbone_channels : 512
+  d_model : 256
+  num_queries : 100
+  freeze_backbone : True
+  encoder_layers : 4
+  encoder_attn_heads : 8
+  decoder_layers : 4
+  decoder_attn_heads : 8
+  dropout_prob : 0.1
+  ff_inner_dim : 2048
+  cls_cost_weight : 1.0
+  l1_cost_weight : 5.0
+  giou_cost_weight : 2.0
+  bg_class_weight : 0.1
+  nms_threshold : 0.5
+
+  encoder_window_size: 7
+  encoder_head_dim: 32
+  encoder_relative_pos_embedding: True
+  encoder_expand_to_global: True
+  encoder_use_abs_pos: True
+
+train_params:
+  task_name: 'finetune_my_dataset'
+  eval_score_threshold: 0.0
+  infer_score_threshold: 0.5
+  use_nms_eval : False
+  use_nms_infer : True
+  seed: 1111
+  acc_steps: 1
+  num_epochs: 500
+  batch_size: 4
+  lr_steps: [60, 90]
+  lr: 0.0001
+  log_steps : 500
+
+
+  # --- fine-tuning ---
+  pretrained_ckpt: 'pretrained_model/swin_detr_cs_weight.pth'  # <-- ścieżka do checkpointu CityScapes
+  resume: False
+  # resume: True
+  freeze_backbone_epochs: 10
+  backbone_lr: 1e-5
+  
+  
+  early_stopping_patience: 50
+  num_workers: 0
+
+  warmup_epochs: 150
+  warmup_factor: 1e-8
+
+  save_every: 25 # co ile epok zapisać dodatkowy plik
+
+
+  ckpt_name: 'finetune_my_dataset.pth'
