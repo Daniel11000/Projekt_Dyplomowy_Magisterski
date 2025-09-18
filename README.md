@@ -1,0 +1,2 @@
+# Projekt_Dyplomowy_Magisterski
+Projekt Dyplomowy Magisterski
