@@ -1,0 +1,67 @@
+dataset_params:
+  train_ann_file: 'Dataset/CityScapes/annotations/instances_boxes_wybrane_cityscapes_gtFine_train.json'
+  val_ann_file: 'Dataset/CityScapes/annotations/instances_boxes_wybrane_cityscapes_gtFine_val.json'
+  train_img_dir: 'Dataset/CityScapes'
+  val_img_dir: 'Dataset/CityScapes'
+  test_img_dir: 'Dataset/CityScapes'
+
+  num_classes:    35
+  bg_class_idx:   0
+  im_size:        1024
+
+
+
+model_params:
+  im_channels : 3
+  backbone_channels : 512
+  d_model : 256
+  num_queries : 100
+  freeze_backbone : True
+  encoder_layers : 4
+  encoder_attn_heads : 8
+  decoder_layers : 4
+  decoder_attn_heads : 8
+  dropout_prob : 0.1
+  ff_inner_dim : 2048
+  cls_cost_weight : 1.0
+  l1_cost_weight : 5.0
+  giou_cost_weight : 2.0
+  bg_class_weight : 0.1
+  nms_threshold : 0.5
+
+  encoder_window_size: 7
+  encoder_head_dim: 32
+  encoder_relative_pos_embedding: True
+  encoder_expand_to_global: True
+  encoder_use_abs_pos: True
+
+train_params:
+  task_name: 'swin_detr_cs'
+  eval_score_threshold: 0.0
+  infer_score_threshold: 0.5
+  use_nms_eval : False
+  use_nms_infer : True
+  seed: 1111
+  acc_steps: 1
+  num_epochs: 1750
+  batch_size: 4
+  lr_steps: [400]
+  lr: 0.001
+  log_steps : 500
+  
+  
+  resume: True
+  auto_resume: True
+
+
+  early_stopping_patience: 50
+  num_workers: 0
+
+  warmup_epochs: 350
+  warmup_factor: 1e-8
+
+  save_every: 50
+
+
+  
+  ckpt_name: 'swin_detr_cs.pth'
